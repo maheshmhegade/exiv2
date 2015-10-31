@@ -43,6 +43,7 @@
 #include <utility>
 #include <algorithm>
 #include <sstream>
+#include <cstring>
 
 #ifdef EXV_HAVE_STDINT_H
 # include <stdint.h>
@@ -191,7 +192,7 @@ namespace Exiv2 {
         //! Default constructor
         DataBuf() : pData_(0), size_(0) {}
         //! Constructor with an initial buffer size
-        explicit DataBuf(long size) : pData_(new byte[size]), size_(size) {}
+        explicit DataBuf(long size) : pData_(new byte[size]), size_(size) { std::memset(pData_, 0x0, size_); }
         //! Constructor, copies an existing buffer
         DataBuf(const byte* pData, long size);
         /*!
@@ -199,7 +200,7 @@ namespace Exiv2 {
                  object similar to std::auto_ptr, i.e., the original object is
                  modified.
          */
-        DataBuf(DataBuf& rhs);
+        DataBuf(const DataBuf& rhs);
         //! Destructor, deletes the allocated buffer
         ~DataBuf() { delete[] pData_; }
         //@}
@@ -211,7 +212,7 @@ namespace Exiv2 {
                  buffer at the original object similar to std::auto_ptr, i.e.,
                  the original object is modified.
          */
-        DataBuf& operator=(DataBuf& rhs);
+        DataBuf& operator=(DataBuf const& rhs);
         /*!
           @brief Allocate a data buffer of at least the given size. Note that if
                  the requested \em size is less than the current buffer size, no

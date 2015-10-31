@@ -1,3 +1,6 @@
 build/
 test/tmp/
-test/data
+CMakeLists.txt.user
+include/exiv2/exv_conf.h
+src/svn_version.h
+src/src

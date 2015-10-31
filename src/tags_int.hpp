@@ -191,6 +191,14 @@ namespace Exiv2 {
        bool operator==(long key) const { return val_ == key; }
     }; // struct TagDetails
 
+    struct RevTagDetails {
+    const char* label_;                     //!< Translation of the tag value
+    long val_;                              //!< Tag value
+
+    //! Comparison operator for use with the find template
+    bool operator==(const std::string& key) const{return label_ == key;}
+    };
+
     /*!
       @brief Helper structure for lookup tables for translations of bitmask
              values to human readable labels.

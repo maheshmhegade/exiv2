@@ -1,6 +1,6 @@
 // ***************************************************************** -*- C++ -*-
 /*
- * Copyright (C) 2004-2015 Andreas Huggel <ahuggel@gmx.net>
+ * Copyright (C) 2004-2014 Andreas Huggel <ahuggel@gmx.net>
  *
  * This program is part of the Exiv2 distribution.
  *
@@ -36,7 +36,7 @@ class UtilsVideo
 public:
     static bool compareTagValue(Exiv2::DataBuf &buf, const char *str);
     static bool compareTagValue(Exiv2::DataBuf& buf,const char arr[][5],int32_t arraysize);
-    static bool simpleBytesComparison(Exiv2::DataBuf& buf ,const char* str,int32_t size);
+    static bool simpleBytesComparision(Exiv2::DataBuf& buf ,const char* str,int32_t size);
 }; // class UtilsVideo
 
 } // namespace Exiv2

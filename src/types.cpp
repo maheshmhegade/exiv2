@@ -126,10 +126,12 @@ namespace Exiv2 {
         return tit->size_;
     }
 
-    DataBuf::DataBuf(DataBuf& rhs)
+    DataBuf::DataBuf(const DataBuf& rhs)
         : pData_(rhs.pData_), size_(rhs.size_)
     {
-        rhs.release();
+        pData_ = new byte[rhs.size_];
+        size_ = rhs.size_;
+        std::copy(rhs.pData_,rhs.pData_+rhs.size_,pData_);
     }
 
     DataBuf::DataBuf(const byte* pData, long size)
@@ -142,10 +144,20 @@ namespace Exiv2 {
         }
     }
 
-    DataBuf& DataBuf::operator=(DataBuf& rhs)
+    DataBuf& DataBuf::operator=(DataBuf const& rhs)
     {
-        if (this == &rhs) return *this;
-        reset(rhs.release());
+        if (this != &rhs) { // self-assignment check expected
+            if ( size_ < rhs.size_ /* storage cannot be reused */)
+            {
+                delete[] pData_;                // destroy storage in this
+                size_  = 0;                     // reset size_ to zero and pData_ to null, in case allocation throws
+                pData_ = NULL;
+                pData_ = new byte[rhs.size_]; // create storage in this
+            }
+            size_ = rhs.size_ ;
+            // copy data from other's storage to this storage
+            std::memcpy(pData_,rhs.pData_,rhs.size_);
+        }
         return *this;
     }
 
